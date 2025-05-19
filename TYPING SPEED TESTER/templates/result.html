@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Typing Result</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Typing Result</h1>
+
+        <div class="paragraph-box">
+            <p><strong>Your Typed Text:</strong></p>
+            <p>{{ typed_text }}</p>
+        </div>
+
+        <p class="result-line"><strong>Time Taken:</strong> {{ time_taken }} seconds</p>
+        <p class="result-line"><strong>Typing Speed:</strong> {{ wpm }} words per minute</p>
+        <p class="result-line"><strong>Accuracy:</strong> {{ accuracy }}%</p>
+
+
+        <a href="/" class="button">Try Again</a>
+    </div>
+</body>
+</html>
