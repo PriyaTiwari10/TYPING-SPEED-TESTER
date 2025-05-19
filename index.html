@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Typing Speed Tester</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts for Elegant Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script>
+        let startTime;
+        let timerInterval;
+
+        function startTyping() {
+            const textArea = document.getElementById("typed_text");
+            textArea.disabled = false;
+            textArea.focus();
+            startTime = new Date().getTime();
+
+            let timeLeft = 60;
+            document.getElementById("time_left").innerText = timeLeft;
+
+            timerInterval = setInterval(function () {
+                timeLeft--;
+                document.getElementById("time_left").innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    beforeSubmit();
+                    document.getElementById("typing_form").submit();
+                }
+            }, 1000);
+        }
+
+        function beforeSubmit() {
+            const endTime = new Date().getTime();
+            const timeTaken = (endTime - startTime) / 1000;
+            document.getElementById("time_taken").value = timeTaken;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Typing Speed Tester</h1>
+        <p class="instructions">
+            Type the paragraph below in the textbox. Timer starts when you click the button.
+        </p>
+
+        <div class="paragraph-box">
+            <p>{{ sample_text }}</p>
+        </div>
+
+        <button class="start-btn" onclick="startTyping()">Start Typing</button>
+
+        <p class="timer">Time Left: <span id="time_left">--</span> seconds</p>
+
+        <form id="typing_form" method="POST" onsubmit="beforeSubmit()">
+            <textarea id="typed_text" name="typed_text" rows="6" disabled required></textarea>
+            <input type="hidden" name="sample_text" value="{{ sample_text }}">
+            <input type="hidden" name="time_taken" id="time_taken">
+            <button class="submit-btn" type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
